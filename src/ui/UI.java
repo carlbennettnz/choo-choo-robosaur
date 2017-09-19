@@ -1,16 +1,16 @@
 package ui;
 
+import game.UIController;
 import game.GameController;
-import game.GameStateManager;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class UI extends JComponent {
-	private final GameController game;
-	private final GameStateManager state;
+	private final UIController game;
+	private final GameController state;
 
-	public UI(GameController game, GameStateManager state) {
+	public UI(UIController game, GameController state) {
 		this.game = game;
 		this.state = state;
 	}
