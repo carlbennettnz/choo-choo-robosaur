@@ -3,13 +3,13 @@ package game;
 import ui.UI;
 
 public class Game {
-	private final GameController controller;
-	private final GameStateManager state;
+	private final UIController controller;
+	private final GameController state;
 	private final UI ui;
 
 	public Game() {
-		this.controller = new GameController();
-		this.state = new GameStateManager();
+		this.controller = new UIController();
+		this.state = new GameController();
 
 		this.ui = new UI(this.controller, this.state);
 	}

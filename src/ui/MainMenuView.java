@@ -1,14 +1,13 @@
 package ui;
 
-import game.GameController;
+import game.UIController;
 
 import javax.swing.*;
-import java.awt.*;
 
 class MainMenuView extends JComponent {
-	private final GameController game;
+	private final UIController game;
 
-	MainMenuView(GameController game) {
+	MainMenuView(UIController game) {
 		this.game = game;
 
 		// draw menu options here, hooking their events to

@@ -1,14 +1,14 @@
 package gameview;
 
-import game.GameStateManager;
+import game.GameController;
 
 import javax.swing.*;
 import java.awt.*;
 
 public abstract class GameView extends JComponent {
-	private final GameStateManager state;
+	private final GameController state;
 
-	public GameView(GameStateManager state) {
+	public GameView(GameController state) {
 		this.state = state;
 	}
 
