@@ -1,27 +1,28 @@
 package physics;
 
-import javafx.geometry.BoundingBox;
-
-import java.awt.*;
-
 public class PlayerPhysObject extends PhysObject {
 	@Override
-	public BoundingBox getBoudingBox() {
+	public AABB getBoudingBox() {
 		return null;
 	}
 
 	@Override
-	public Point getPosition() {
+	public Vector getPosition() {
 		return null;
 	}
 
 	@Override
-	public void setPosition(Point p) {
+	public void setPosition(Vector p) {
 
 	}
 
 	@Override
 	public void handleCollision(PhysObject o) {
 
+	}
+
+	@Override
+	public void applyForce(Vector f) {
+		
 	}
 }
