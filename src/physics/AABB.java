@@ -44,4 +44,15 @@ public class AABB {
 	public Vector getAcceleration() {
 		return acceleration;
 	}
+
+	public boolean intersects(AABB box) {
+		if (box == null) return false;
+
+		Vector a = getMin();
+		Vector A = getMax();
+		Vector b = box.getMin();
+		Vector B = box.getMax();
+
+		return a.x < B.x && A.x > b.x && a.y < B.y && A.y > b.y;
+	}
 }
