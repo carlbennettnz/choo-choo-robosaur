@@ -1,10 +1,10 @@
 package physics;
 
 public class AABB {
-	private Vector center;
-	private Vector halfSize;
-	private Vector velocity;
-	private Vector acceleration;
+	private final Vector center;
+	private final Vector halfSize;
+	private final Vector velocity;
+	private final Vector acceleration;
 	
 	public AABB(Vector center, Vector halfSize) {
 		this(center, halfSize, null, null);
@@ -12,9 +12,9 @@ public class AABB {
 	
 	public AABB(Vector center, Vector halfSize, Vector velocity, Vector acceleration) {
 		this.center = center != null ? center : Vector.zero();
-		this.center = halfSize != null ? halfSize : Vector.zero();
-		this.center = velocity != null ? velocity : Vector.zero();
-		this.center = acceleration != null ? acceleration : Vector.zero();
+		this.halfSize = halfSize != null ? halfSize : Vector.zero();
+		this.velocity = velocity != null ? velocity : Vector.zero();
+		this.acceleration = acceleration != null ? acceleration : Vector.zero();
 	}
 	
 	public Vector getMin() {
