@@ -4,7 +4,7 @@ public abstract class PhysObject {
 	public PhysObject() {
 	}
 
-	public abstract AABB getBoudingBox();
+	public abstract AABB getBoundingBox();
 
 	public abstract Vector getPosition();
 

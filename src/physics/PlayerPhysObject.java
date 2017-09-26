@@ -2,7 +2,7 @@ package physics;
 
 public class PlayerPhysObject extends PhysObject {
 	@Override
-	public AABB getBoudingBox() {
+	public AABB getBoundingBox() {
 		return null;
 	}
 
