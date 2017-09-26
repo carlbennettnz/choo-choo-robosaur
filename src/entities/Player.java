@@ -2,6 +2,7 @@ package entities;
 
 import physics.PhysObject;
 import physics.PlayerPhysObject;
+import physics.Vector;
 
 import java.awt.*;
 
@@ -11,7 +12,7 @@ public class Player {
 
 	private int health = 100;
 
-	public Player(String name, Point pos) {
+	public Player(String name, Vector pos) {
 		this.name = name;
 		this.phys = new PlayerPhysObject();
 

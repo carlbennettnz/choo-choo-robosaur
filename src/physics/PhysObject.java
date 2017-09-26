@@ -1,19 +1,16 @@
 package physics;
 
-import javafx.geometry.BoundingBox;
-
-import java.awt.*;
-
 public abstract class PhysObject {
 	public PhysObject() {
-
 	}
 
-	public abstract BoundingBox getBoudingBox();
+	public abstract AABB getBoundingBox();
 
-	public abstract Point getPosition();
+	public abstract Vector getPosition();
 
-	public abstract void setPosition(Point p);
+	public abstract void setPosition(Vector p);
+	
+	public abstract void applyForce(Vector f);
 
 	public abstract void handleCollision(PhysObject o);
 }
