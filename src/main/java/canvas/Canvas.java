@@ -1,7 +1,7 @@
 package canvas;
 
 import common.Renderable;
-import game.GameController;
+import common.GameController;
 import common.AABB;
 
 import java.awt.*;
