@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class AABBTest {
 	private AABB makeAABB(int centerX, int centerY, int halfWidth, int halfHeight) {
-		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight));
+		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight), 1.0f);
 	}
 
 	@Test
