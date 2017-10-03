@@ -92,15 +92,18 @@ public class AABB {
 			/* calculate the overlapping vector */
 			Vector penetrationVector = md.closestPointOnBoundsToPoint(Vector.zero());
 			
-			double m = mass + o.mass;
-			double a = o.mass/m;
-			double b = mass / m;
-			/* move the center out by that much */
-			this.center = center.add(penetrationVector);
+			if(mass != 0 || o.mass != 0) {
+				double m = mass + o.mass;
+				double a = (o.mass != 0 ? o.mass : mass) / m;
+				double b = (mass != 0 ? mass : o.mass) / m;
+				/* move the center out by that much */
+				center = center.add(penetrationVector.mult(a));
+				o.center = center.add(penetrationVector.mult(b));
+			}
 			
 			/* adjust the velocities accordingly */
 	        Vector tangent = penetrationVector.normalized().tangent();
-	        this.velocity = tangent.mult(velocity.dot(tangent));
+	        velocity = tangent.mult(velocity.dot(tangent));
 	        o.velocity = tangent.mult(o.velocity.dot(tangent));
 	        
 	        return penetrationVector;
