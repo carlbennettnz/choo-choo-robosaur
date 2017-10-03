@@ -2,7 +2,7 @@ package canvas;
 
 import common.Renderable;
 import game.GameController;
-import physics.AABB;
+import common.AABB;
 
 import java.awt.*;
 import java.util.List;

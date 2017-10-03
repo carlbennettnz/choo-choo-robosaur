@@ -1,7 +1,7 @@
 package game;
 
 import common.Renderable;
-import physics.AABB;
+import common.AABB;
 
 import java.util.List;
 
