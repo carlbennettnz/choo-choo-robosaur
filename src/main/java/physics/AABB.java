@@ -111,6 +111,8 @@ public class AABB {
 				o.center = o.center.add(B);
 				
 		        return new Vector[] {A, B};
+			} else {
+				return new Vector[] {Vector.zero(), Vector.zero()};
 			}
 		}
 		
