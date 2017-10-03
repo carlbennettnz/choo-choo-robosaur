@@ -1,7 +1,10 @@
 package physics;
 
 public abstract class PhysObject {
-	public PhysObject() {
+	private AABB bounds;
+	
+	public PhysObject(AABB bounds, double mass) {
+		this.bounds = bounds;
 	}
 
 	public abstract AABB getBoundingBox();
@@ -10,7 +13,18 @@ public abstract class PhysObject {
 
 	public abstract void setPosition(Vector p);
 	
-	public abstract void applyForce(Vector f);
+	public void applyForce(Vector f) {
+		bounds.applyForce(f);
+	}
 
-	public abstract void handleCollision(PhysObject o);
+	
+	/**
+	 * dt is the time passed, in seconds, since advance was last called.
+	 * @param dt change in time (seconds)
+	 */
+	public abstract void advance(double dt);
+	
+	public void resolveCollision(PhysObject o) {
+		bounds.resolveCollision(o.bounds);
+	}
 }
