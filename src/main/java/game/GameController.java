@@ -1,6 +1,6 @@
 package game;
 
-import canvas.Renderable;
+import common.Renderable;
 import physics.AABB;
 
 import java.util.List;

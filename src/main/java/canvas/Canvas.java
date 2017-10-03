@@ -1,5 +1,6 @@
 package canvas;
 
+import common.Renderable;
 import game.GameController;
 import physics.AABB;
 
