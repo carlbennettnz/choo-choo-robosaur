@@ -1,5 +1,7 @@
 package physics;
 
+import common.AABB;
+
 public abstract class PhysObject {
 	public PhysObject() {
 	}
