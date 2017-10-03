@@ -36,10 +36,10 @@ public abstract class PhysObject {
 		
 		if(collision != null) {
 			if(collisionCallback != null) {
-				collisionCallback.collidle(o.collisionCallback, collision[0]);
+				collisionCallback.collide(o.collisionCallback, collision[0]);
 			}
 			if(o.collisionCallback != null) {
-				o.collisionCallback.collidle(collisionCallback, collision[1]);
+				o.collisionCallback.collide(collisionCallback, collision[1]);
 			}
 		}
 	}
