@@ -1,5 +1,7 @@
 package physics;
 
+import common.AABB;
+
 public class PlayerPhysObject extends PhysObject {
 	@Override
 	public AABB getBoundingBox() {

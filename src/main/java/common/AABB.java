@@ -1,4 +1,6 @@
-package physics;
+package common;
+
+import physics.Vector;
 
 public class AABB {
 	private final Vector center;

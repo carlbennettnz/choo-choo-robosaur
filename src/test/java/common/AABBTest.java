@@ -1,6 +1,8 @@
-package physics;
+package common;
 
+import common.AABB;
 import org.junit.Test;
+import physics.Vector;
 
 import static org.junit.Assert.*;
 
