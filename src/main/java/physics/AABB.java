@@ -85,28 +85,33 @@ public class AABB {
 		return new AABB(topLeft.add(fullSize.mult(0.5)), fullSize.mult(0.5), null, null, 0);
 	}
 	
-	public Vector resolveCollision(AABB o) {
+	public Vector[] resolveCollision(AABB o) {
 		AABB md = o.minkowskiDifference(this);
 		if (md.getMin().x <= 0 && md.getMax().x >= 0 && md.getMin().y <= 0 && md.getMax().y >= 0) {
 			
 			/* calculate the overlapping vector */
 			Vector penetrationVector = md.closestPointOnBoundsToPoint(Vector.zero());
-			
-			if(mass != 0 || o.mass != 0) {
-				double m = mass + o.mass;
-				double a = (o.mass != 0 ? o.mass : mass) / m;
-				double b = (mass != 0 ? mass : o.mass) / m;
-				/* move the center out by that much */
-				center = center.add(penetrationVector.mult(a));
-				o.center = center.add(penetrationVector.mult(b));
-			}
-			
+
 			/* adjust the velocities accordingly */
 	        Vector tangent = penetrationVector.normalized().tangent();
 	        velocity = tangent.mult(velocity.dot(tangent));
 	        o.velocity = tangent.mult(o.velocity.dot(tangent));
-	        
-	        return penetrationVector;
+
+			/* move the center based on masses */
+			if(mass != 0 || o.mass != 0) {
+				double m = mass + o.mass;
+				
+				double a = (o.mass != 0 ? o.mass : mass) / m;
+				double b = (mass != 0 ? mass : o.mass) / m;
+				
+				Vector A = penetrationVector.mult(a);
+				Vector B = penetrationVector.mult(b);
+				
+				center = center.add(A);
+				o.center = center.add(B);
+				
+		        return new Vector[] {A, B};
+			}
 		}
 		
 		return null;
