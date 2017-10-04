@@ -89,7 +89,7 @@ public class AABB {
 
 	public Vector[] resolveCollision(AABB o) {
 		AABB md = o.minkowskiDifference(this);
-		if (md.getMin().x <= 0 && md.getMax().x >= 0 && md.getMin().y <= 0 && md.getMax().y >= 0) {
+		if (md.getMin().x < 0 && md.getMax().x > 0 && md.getMin().y < 0 && md.getMax().y > 0) {
 
 			/* calculate the overlapping vector */
 			Vector penetrationVector = md.closestPointOnBoundsToPoint(Vector.zero());
