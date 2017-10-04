@@ -1,12 +1,17 @@
 package physics;
 
-import common.AABB;
+import common.Collidable;
 
 public abstract class PhysObject {
 	private AABB bounds;
+	private Collidable collisionCallback;
 	
 	public PhysObject(AABB bounds, double mass) {
 		this.bounds = bounds;
+	}
+	
+	public void setCollisionCallback(Collidable c) {
+		collisionCallback = c;
 	}
 
 	public abstract AABB getBoundingBox();
@@ -27,6 +32,15 @@ public abstract class PhysObject {
 	public abstract void advance(double dt);
 	
 	public void resolveCollision(PhysObject o) {
-		bounds.resolveCollision(o.bounds);
+		Vector[] collision = bounds.resolveCollision(o.bounds);
+		
+		if(collision != null) {
+			if(collisionCallback != null) {
+				collisionCallback.collidle(o.collisionCallback, collision[0]);
+			}
+			if(o.collisionCallback != null) {
+				o.collisionCallback.collidle(collisionCallback, collision[1]);
+			}
+		}
 	}
 }
