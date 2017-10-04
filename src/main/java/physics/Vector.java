@@ -52,5 +52,15 @@ public class Vector {
 	public boolean isZero() {
 		return x == 0 && y == 0;
 	}
+
+	public boolean equals(Object o) {
+		if (!(o instanceof Vector)) {
+			return false;
+		}
+
+		Vector v = (Vector) o;
+
+		return v.x == x && v.y == y;
+	}
 }
 
