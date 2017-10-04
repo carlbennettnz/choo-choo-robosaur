@@ -106,11 +106,11 @@ public class AABB {
 				double a = (o.mass != 0 ? o.mass : mass) / m;
 				double b = (mass != 0 ? mass : o.mass) / m;
 
-				Vector A = penetrationVector.mult(+a);
-				Vector B = penetrationVector.mult(-b);
+				Vector A = penetrationVector.mult(a);
+				Vector B = penetrationVector.mult(b);
 
 				center = center.add(A);
-				o.center = center.add(B);
+				o.center = o.center.sub(B);
 
 				return new Vector[] {A, B};
 			}
