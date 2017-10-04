@@ -7,13 +7,13 @@ import static org.junit.Assert.*;
 
 public class AABBTest {
 	private AABB makeAABB(int centerX, int centerY, int halfWidth, int halfHeight) {
-		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight), 0);
+		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight), 1.0f);
 	}
 
 	private AABB makeAABB(int centerX, int centerY, int halfWidth, int halfHeight,
 						  int velocityX, int velocityY, int accelerationX, int accelerationY) {
 		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight),
-						new Vector(velocityX, velocityY), new Vector(accelerationX, accelerationY), 0);
+						new Vector(velocityX, velocityY), new Vector(accelerationX, accelerationY), 1.0f);
 	}
 
 	@Test
