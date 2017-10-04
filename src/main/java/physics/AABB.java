@@ -101,8 +101,17 @@ public class AABB {
 			if(mass != 0 || o.mass != 0) {
 				double m = mass + o.mass;
 				
-				double a = (o.mass != 0 ? o.mass : mass) / m;
-				double b = (mass != 0 ? mass : o.mass) / m;
+				double a = 0;
+				double b = 0;
+				
+				if(o.mass == 0) {
+					a = 1;
+				} else if(mass == 0) {
+					b = 1;
+				} else {
+					a = o.mass / m;
+					b = mass / m;
+				}
 				
 				Vector A = penetrationVector.mult(a);
 				Vector B = penetrationVector.mult(-b);
