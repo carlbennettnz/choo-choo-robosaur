@@ -8,9 +8,8 @@ import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class Canvas extends java.awt.Canvas {
+public class Canvas extends java.awt.Canvas {
 	private final GameController game;
-	private Image offscreen;
 
 	public Canvas(GameController game) {
 		this.game = game;
@@ -61,7 +60,7 @@ public abstract class Canvas extends java.awt.Canvas {
 		}
 	}
 
-	private List<Renderable> getEntitiesInView() {
+	List<Renderable> getEntitiesInView() {
 		List<Renderable> entities = game.getEntities();
 		AABB viewport = game.getViewport();
 
@@ -72,21 +71,19 @@ public abstract class Canvas extends java.awt.Canvas {
 	}
 
 	public void update(Graphics g) {
-		if (offscreen == null) {
-			initialiseOffscreen();
-		}
-
-		Image localOffscreen = offscreen;
+		Image offscreen = getOffscreenImage();
 		Graphics og = offscreen.getGraphics();
 		paint(og);
-		g.drawImage(localOffscreen, 0, 0, this);
+		g.drawImage(offscreen, 0, 0, this);
 	}
 
-	private void initialiseOffscreen() {
+	Image getOffscreenImage() {
 		Dimension d = getSize();
-		offscreen = createImage(d.width, d.height);
+		Image offscreen = createImage(d.width, d.height);
 		Graphics og = offscreen.getGraphics();
 		og.setColor(getBackground());
 		og.fillRect(0, 0, d.width, d.height);
+
+		return offscreen;
 	}
 }
