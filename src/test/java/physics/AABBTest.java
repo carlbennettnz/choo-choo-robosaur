@@ -46,6 +46,22 @@ public class AABBTest {
 	}
 	
 	@Test
+	public void horizontalCollisionImmovable() {
+		AABB a = makeAABB( 2,  0, 3, 3, 1.0);
+		AABB b = makeAABB(-2,  0, 3, 3, 0.0);
+		Vector[] c = a.resolveCollision(b);
+		
+		assertTrue(c[0].x == 2.0);
+		assertTrue(c[0].y == 0.0);
+		assertTrue(c[1].x == 0.0);
+		assertTrue(c[1].y == 0.0);
+		
+		c = a.resolveCollision(b);
+		
+		assertTrue(c == null);
+	}
+	
+	@Test
 	public void horizontalCollisionVelocity() {
 		AABB a = makeAABB( 2,  0, 3, 3);
 		AABB b = makeAABB(-2,  0, 3, 3);
