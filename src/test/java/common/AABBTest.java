@@ -7,13 +7,13 @@ import static org.junit.Assert.*;
 
 public class AABBTest {
 	private AABB makeAABB(int centerX, int centerY, int halfWidth, int halfHeight) {
-		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight));
+		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight), 0);
 	}
 
 	private AABB makeAABB(int centerX, int centerY, int halfWidth, int halfHeight,
 						  int velocityX, int velocityY, int accelerationX, int accelerationY) {
 		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight),
-						new Vector(velocityX, velocityY), new Vector(accelerationX, accelerationY));
+						new Vector(velocityX, velocityY), new Vector(accelerationX, accelerationY), 0);
 	}
 
 	@Test
@@ -36,35 +36,6 @@ public class AABBTest {
 		assertEquals(makeAABB(5, -5, 1, 2).getSize(), new Vector(2, 4));
 		assertEquals(makeAABB(5, -5, 1, 2).getSize(), new Vector(2, 4));
 		assertEquals(makeAABB(0,  0, 0, 0).getSize(), new Vector(0, 0));
-	}
-
-	@Test
-	public void center() throws Exception {
-		assertEquals(makeAABB(0,  0, 1, 1).getCenter(), new Vector(0, 0));
-		assertEquals(makeAABB(5, -5, 1, 1).getCenter(), new Vector(5, -5));
-		assertEquals(makeAABB(0,  0, 0, 0).getCenter(), new Vector(0, 0));
-	}
-
-	@Test
-	public void halfSize() throws Exception {
-		assertEquals(makeAABB(0, 0, 1, 1).getHalfSize(), new Vector(1, 1));
-		assertEquals(makeAABB(0, 0, 0, 0).getHalfSize(), new Vector(0, 0));
-	}
-
-	@Test
-	public void velocity() throws Exception {
-		assertEquals(makeAABB(0, 0, 0, 0).getVelocity(), new Vector(0, 0));
-		assertEquals(makeAABB(0, 0, 0, 0, 0, 0, 0, 0).getVelocity(), new Vector(0, 0));
-		assertEquals(makeAABB(0, 0, 0, 0, 5, -3, 0, 0).getVelocity(), new Vector(5, -3));
-		assertEquals(makeAABB(1, 1, 1, 1, 5, -3, 1, 1).getVelocity(), new Vector(5, -3));
-	}
-
-	@Test
-	public void acceleration() throws Exception {
-		assertEquals(makeAABB(0, 0, 0, 0).getAcceleration(), new Vector(0, 0));
-		assertEquals(makeAABB(0, 0, 0, 0, 0, 0, 0, 0).getAcceleration(), new Vector(0, 0));
-		assertEquals(makeAABB(0, 0, 0, 0, 0, 0, 5, -3).getAcceleration(), new Vector(5, -3));
-		assertEquals(makeAABB(1, 1, 1, 1, 1, 1, 5, -3).getAcceleration(), new Vector(5, -3));
 	}
 
 	@Test
