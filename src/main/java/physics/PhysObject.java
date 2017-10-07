@@ -1,5 +1,6 @@
 package physics;
 
+import common.AABB;
 import common.Collidable;
 
 public abstract class PhysObject {
