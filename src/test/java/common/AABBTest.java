@@ -1,70 +1,124 @@
 package common;
 
 import org.junit.Test;
+
 import physics.Vector;
 
 import static org.junit.Assert.*;
 
 public class AABBTest {
 	private AABB makeAABB(int centerX, int centerY, int halfWidth, int halfHeight) {
-		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight));
+		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight), 1.0);
 	}
-
-	private AABB makeAABB(int centerX, int centerY, int halfWidth, int halfHeight,
-						  int velocityX, int velocityY, int accelerationX, int accelerationY) {
-		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight),
-						new Vector(velocityX, velocityY), new Vector(accelerationX, accelerationY));
+	
+	private AABB makeAABB(int centerX, int centerY, int halfWidth, int halfHeight, double mass) {
+		return new AABB(new Vector(centerX, centerY), new Vector(halfWidth, halfHeight), mass);
 	}
-
+	
 	@Test
-	public void min() throws Exception {
-		assertEquals(makeAABB(0, 0, 1, 1).getMin(), new Vector(-1, -1));
-		assertEquals(makeAABB(1, 1, 1, 1).getMin(), new Vector(0, 0));
-		assertEquals(makeAABB(0, 0, 0, 0).getMin(), new Vector(0, 0));
-	}
+	public void horizontalCollisionNoVelocity() {
+		AABB a = makeAABB( 2,  0, 3, 3);
+		AABB b = makeAABB(-2,  0, 3, 3);
+		Vector[] c = a.resolveCollision(b);
 
-	@Test
-	public void max() throws Exception {
-		assertEquals(makeAABB( 0,  0, 1, 1).getMax(), new Vector(1, 1));
-		assertEquals(makeAABB(-1, -1, 1, 1).getMax(), new Vector(0, 0));
-		assertEquals(makeAABB( 0,  0, 0, 0).getMax(), new Vector(0, 0));
+		assertEquals(c[0].x, 1.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, -1.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
+		
+		c = a.resolveCollision(b);
+		
+		assertNull(c);
 	}
-
+	
 	@Test
-	public void size() throws Exception {
-		assertEquals(makeAABB(0,  0, 1, 2).getSize(), new Vector(2, 4));
-		assertEquals(makeAABB(5, -5, 1, 2).getSize(), new Vector(2, 4));
-		assertEquals(makeAABB(5, -5, 1, 2).getSize(), new Vector(2, 4));
-		assertEquals(makeAABB(0,  0, 0, 0).getSize(), new Vector(0, 0));
+	public void horizontalCollisionDifferentMass() {
+		AABB a = makeAABB( 2,  0, 3, 3, 1.0);
+		AABB b = makeAABB(-2,  0, 3, 3, 2.0);
+		Vector[] c = a.resolveCollision(b);
+		
+		assertEquals(c[0].x, 2.0 * 2.0/3.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, -2.0 * 1.0/3.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
+		
+		c = a.resolveCollision(b);
+		
+		assertNull(c);
 	}
-
+	
 	@Test
-	public void center() throws Exception {
-		assertEquals(makeAABB(0,  0, 1, 1).getCenter(), new Vector(0, 0));
-		assertEquals(makeAABB(5, -5, 1, 1).getCenter(), new Vector(5, -5));
-		assertEquals(makeAABB(0,  0, 0, 0).getCenter(), new Vector(0, 0));
+	public void horizontalCollisionImmovable() {
+		AABB a = makeAABB( 2,  0, 3, 3, 1.0);
+		AABB b = makeAABB(-2,  0, 3, 3, 0.0);
+		Vector[] c = a.resolveCollision(b);
+		
+		assertEquals(c[0].x, 2.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, 0.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
+		
+		c = a.resolveCollision(b);
+		
+		assertNull(c);
 	}
-
+	
 	@Test
-	public void halfSize() throws Exception {
-		assertEquals(makeAABB(0, 0, 1, 1).getHalfSize(), new Vector(1, 1));
-		assertEquals(makeAABB(0, 0, 0, 0).getHalfSize(), new Vector(0, 0));
+	public void horizontalCollisionVelocity() {
+		AABB a = makeAABB( 2,  0, 3, 3);
+		AABB b = makeAABB(-2,  0, 3, 3);
+
+		a.velocity = new Vector(0.5, 1);
+		b.velocity = new Vector(1, 0.5);
+		
+		Vector[] c = a.resolveCollision(b);
+
+		assertEquals(a.velocity.x, 0.0, 0);
+		assertEquals(a.velocity.y, 1.0, 0);
+		assertEquals(b.velocity.x, 0.0, 0);
+		assertEquals(b.velocity.y, 0.5, 0);
+		
+		assertEquals(c[0].x, 1.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, -1.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
+		
+		c = a.resolveCollision(b);
+		
+		assertNull(c);
 	}
-
+	
 	@Test
-	public void velocity() throws Exception {
-		assertEquals(makeAABB(0, 0, 0, 0).getVelocity(), new Vector(0, 0));
-		assertEquals(makeAABB(0, 0, 0, 0, 0, 0, 0, 0).getVelocity(), new Vector(0, 0));
-		assertEquals(makeAABB(0, 0, 0, 0, 5, -3, 0, 0).getVelocity(), new Vector(5, -3));
-		assertEquals(makeAABB(1, 1, 1, 1, 5, -3, 1, 1).getVelocity(), new Vector(5, -3));
+	public void verticalCollisionNoVelocity() {
+		AABB a = makeAABB( 0,  2, 3, 3);
+		AABB b = makeAABB( 0,  -2, 3, 3);
+		Vector[] c = a.resolveCollision(b);
+
+		assertEquals(c[0].x, 0.0, 0);
+		assertEquals(c[0].y, 1.0, 0);
+		assertEquals(c[1].x, 0.0, 0);
+		assertEquals(c[1].y, -1.0, 0);
+		
+		c = a.resolveCollision(b);
+		
+		assertNull(c);
 	}
-
+	
 	@Test
-	public void acceleration() throws Exception {
-		assertEquals(makeAABB(0, 0, 0, 0).getAcceleration(), new Vector(0, 0));
-		assertEquals(makeAABB(0, 0, 0, 0, 0, 0, 0, 0).getAcceleration(), new Vector(0, 0));
-		assertEquals(makeAABB(0, 0, 0, 0, 0, 0, 5, -3).getAcceleration(), new Vector(5, -3));
-		assertEquals(makeAABB(1, 1, 1, 1, 1, 1, 5, -3).getAcceleration(), new Vector(5, -3));
+	public void diagonalCollisionNoVelocity() {
+		AABB a = makeAABB( 2,  2, 3, 3);
+		AABB b = makeAABB( -2,  -2, 3, 3);
+		Vector[] c = a.resolveCollision(b);
+		
+		/* if x and y are equal length, move along x */
+		assertEquals(c[0].x, 1.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, -1.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
+		
+		c = a.resolveCollision(b);
+		
+		assertNull(c);
 	}
 
 	@Test
