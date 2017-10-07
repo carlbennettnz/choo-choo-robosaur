@@ -44,7 +44,7 @@ public class World {
 			PhysObject a = objects.get(i);
 			for(int j = i + 1; j < objects.size(); j++) {
 				PhysObject b = objects.get(j);
-				a.resolveCollision(b);
+				a.collide(b);
 			}
 		}
 	}
