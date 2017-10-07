@@ -79,4 +79,20 @@ public class AABB {
 		Vector fullSize = getSize().add(o.getSize());
 		return new AABB(topLeft.add(fullSize.mult(0.5)), fullSize.mult(0.5));
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+	    if(!(o instanceof AABB)) {
+	        return false;
+	    }
+	    
+	    AABB a = (AABB) o;
+	    
+	    return a.center.equals(center) && a.halfSize.equals(halfSize);
+	}
+	
+	@Override
+	public String toString() {
+	    return "AABB(" + center + ", " + halfSize+")";
+	}
 }

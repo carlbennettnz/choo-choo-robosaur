@@ -136,4 +136,10 @@ public class PhysObject implements Positionable {
     public void setCollisionCallback(Collidable c) {
         this.collisionCallback = c;
     }
+    
+    @Override
+    public String toString() {
+        return "PhysObject(" + aabb + ", " + velocity + ", " + acceleration 
+                + ", " + mass +")";
+    }
 }
