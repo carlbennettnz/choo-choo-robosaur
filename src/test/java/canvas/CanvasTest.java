@@ -3,8 +3,9 @@ package canvas;
 import common.AABB;
 import common.GameController;
 import common.Renderable;
+import common.Vector;
+
 import org.junit.Test;
-import physics.Vector;
 
 import java.awt.*;
 import java.util.List;

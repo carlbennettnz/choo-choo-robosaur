@@ -1,7 +1,5 @@
 package common;
 
-import physics.Vector;
-
 public class AABB {
 	public Vector center;
 	public Vector halfSize;

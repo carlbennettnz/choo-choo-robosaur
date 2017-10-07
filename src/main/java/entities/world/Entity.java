@@ -2,26 +2,57 @@ package entities.world;
 
 import common.AABB;
 import common.Collidable;
+import common.Positionable;
 import common.Renderable;
-import physics.PhysObject;
+import common.Vector;
 
-public abstract class Entity implements Renderable, Collidable {
-    private PhysObject physObject;
+public abstract class Entity implements Renderable, Collidable, Positionable {
+    private Positionable position;
+    protected Collidable collisionCallback;
 
-    public Entity(PhysObject physObject) {
-        setPhysObject(physObject);
+    public Entity(Positionable position) {
+        setPositionable(position);
     }
 
-    public final void setPhysObject(PhysObject physObject){
-        assert (physObject != null);
-        this.physObject = physObject;
+    private final void setPositionable(Positionable position) {
+        if(position == null)
+            throw new RuntimeException("entity must have a positionable.");
+        this.position = position;
+        position.setCollisionCallback(this);
     }
-
-    public final PhysObject getPhysObject(){
-        return physObject;
-    }
-
+    
+    @Override
     public AABB getBoundingBox() {
-        return physObject.getBoundingBox();
+        return position.getBoundingBox();
+    }
+
+    @Override
+    public Vector getPosition() {
+        return position.getPosition();
+    }
+
+    @Override
+    public Vector getVelocity() {
+        return position.getVelocity();
+    }
+
+    @Override
+    public void setPosition(Vector p) {
+        position.setPosition(p);
+    }
+
+    @Override
+    public void setVelocity(Vector p) {
+        position.setVelocity(p);
+    }
+
+    @Override
+    public void applyForce(Vector f) {
+        position.applyForce(f);
+    }
+
+    @Override
+    public void setCollisionCallback(Collidable c) {
+        this.collisionCallback = c;
     }
 }

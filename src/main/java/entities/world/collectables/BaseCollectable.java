@@ -1,19 +1,19 @@
 package entities.world.collectables;
 
 import common.Collidable;
+import common.Positionable;
+import common.Vector;
 import entities.inventory.InventoryItem;
 import entities.properties.Collectable;
 import entities.properties.ItemCollector;
 import entities.world.Entity;
-import physics.PhysObject;
-import physics.Vector;
 
 
 public abstract class BaseCollectable extends Entity implements Collectable {
     private InventoryItem inventoryItem;
 
-    public BaseCollectable(PhysObject physObject, InventoryItem inventoryItem) {
-        super(physObject);
+    public BaseCollectable(Positionable position, InventoryItem inventoryItem) {
+        super(position);
 
         assert (inventoryItem != null);
 

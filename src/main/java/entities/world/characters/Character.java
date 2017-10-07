@@ -1,13 +1,13 @@
 package entities.world.characters;
 
 import common.Collidable;
+import common.Positionable;
 import entities.inventory.Inventory;
 import entities.properties.Collectable;
 import entities.properties.Damageable;
 import entities.properties.ItemCollector;
 import entities.properties.Tickable;
 import entities.world.Entity;
-import physics.PhysObject;
 
 public abstract class Character extends Entity implements Damageable, Tickable, ItemCollector, Collidable {
     private final Inventory inventory;
@@ -16,8 +16,8 @@ public abstract class Character extends Entity implements Damageable, Tickable, 
     private int health;
     private int maxHealth;
 
-    public Character(PhysObject physObject, CharacterController controller, int maxHealth) {
-        super(physObject);
+    public Character(Positionable position, CharacterController controller, int maxHealth) {
+        super(position);
 
         assert (maxHealth > 0);
 
