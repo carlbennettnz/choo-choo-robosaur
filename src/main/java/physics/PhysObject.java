@@ -2,12 +2,13 @@ package physics;
 
 import common.AABB;
 import common.Collidable;
+import common.Vector;
 
 public abstract class PhysObject {
 	private AABB bounds;
 	private Collidable collisionCallback;
 	
-	public PhysObject(AABB bounds, double mass) {
+	public PhysObject(AABB bounds) {
 		this.bounds = bounds;
 	}
 	
@@ -34,7 +35,6 @@ public abstract class PhysObject {
 	
 	public void resolveCollision(PhysObject o) {
 		Vector[] collision = bounds.resolveCollision(o.bounds);
-		
 		if(collision != null) {
 			if(collisionCallback != null) {
 				collisionCallback.collide(o.collisionCallback, collision[0]);

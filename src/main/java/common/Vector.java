@@ -1,4 +1,4 @@
-package physics;
+package common;
 
 public class Vector {
 	public final double x, y;
