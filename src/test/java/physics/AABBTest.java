@@ -19,14 +19,14 @@ public class AABBTest {
 		AABB b = makeAABB(-2,  0, 3, 3);
 		Vector[] c = a.resolveCollision(b);
 
-		assertTrue(c[0].x == 1.0);
-		assertTrue(c[0].y == 0.0);
-		assertTrue(c[1].x == -1.0);
-		assertTrue(c[1].y == 0.0);
+		assertEquals(c[0].x, 1.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, -1.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
 		
 		c = a.resolveCollision(b);
 		
-		assertTrue(c == null);
+		assertNull(c);
 	}
 	
 	@Test
@@ -35,14 +35,14 @@ public class AABBTest {
 		AABB b = makeAABB(-2,  0, 3, 3, 2.0);
 		Vector[] c = a.resolveCollision(b);
 		
-		assertTrue(c[0].x == 2.0 * 2.0/3.0);
-		assertTrue(c[0].y == 0.0);
-		assertTrue(c[1].x == -2.0 * 1.0/3.0);
-		assertTrue(c[1].y == 0.0);
+		assertEquals(c[0].x, 2.0 * 2.0/3.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, -2.0 * 1.0/3.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
 		
 		c = a.resolveCollision(b);
 		
-		assertTrue(c == null);
+		assertNull(c);
 	}
 	
 	@Test
@@ -51,14 +51,14 @@ public class AABBTest {
 		AABB b = makeAABB(-2,  0, 3, 3, 0.0);
 		Vector[] c = a.resolveCollision(b);
 		
-		assertTrue(c[0].x == 2.0);
-		assertTrue(c[0].y == 0.0);
-		assertTrue(c[1].x == 0.0);
-		assertTrue(c[1].y == 0.0);
+		assertEquals(c[0].x, 2.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, 0.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
 		
 		c = a.resolveCollision(b);
 		
-		assertTrue(c == null);
+		assertNull(c);
 	}
 	
 	@Test
@@ -71,19 +71,19 @@ public class AABBTest {
 		
 		Vector[] c = a.resolveCollision(b);
 
-		assertTrue(a.velocity.x == 0.0);
-		assertTrue(a.velocity.y == 1.0);
-		assertTrue(b.velocity.x == 0.0);
-		assertTrue(b.velocity.y == 0.5);
+		assertEquals(a.velocity.x, 0.0, 0);
+		assertEquals(a.velocity.y, 1.0, 0);
+		assertEquals(b.velocity.x, 0.0, 0);
+		assertEquals(b.velocity.y, 0.5, 0);
 		
-		assertTrue(c[0].x == 1.0);
-		assertTrue(c[0].y == 0.0);
-		assertTrue(c[1].x == -1.0);
-		assertTrue(c[1].y == 0.0);
+		assertEquals(c[0].x, 1.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, -1.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
 		
 		c = a.resolveCollision(b);
 		
-		assertTrue(c == null);
+		assertNull(c);
 	}
 	
 	@Test
@@ -92,14 +92,14 @@ public class AABBTest {
 		AABB b = makeAABB( 0,  -2, 3, 3);
 		Vector[] c = a.resolveCollision(b);
 
-		assertTrue(c[0].x == 0.0);
-		assertTrue(c[0].y == 1.0);
-		assertTrue(c[1].x == 0.0);
-		assertTrue(c[1].y == -1.0);
+		assertEquals(c[0].x, 0.0, 0);
+		assertEquals(c[0].y, 1.0, 0);
+		assertEquals(c[1].x, 0.0, 0);
+		assertEquals(c[1].y, -1.0, 0);
 		
 		c = a.resolveCollision(b);
 		
-		assertTrue(c == null);
+		assertNull(c);
 	}
 	
 	@Test
@@ -109,14 +109,14 @@ public class AABBTest {
 		Vector[] c = a.resolveCollision(b);
 		
 		/* if x and y are equal length, move along x */
-		assertTrue(c[0].x == 1.0);
-		assertTrue(c[0].y == 0.0);
-		assertTrue(c[1].x == -1.0);
-		assertTrue(c[1].y == 0.0);
+		assertEquals(c[0].x, 1.0, 0);
+		assertEquals(c[0].y, 0.0, 0);
+		assertEquals(c[1].x, -1.0, 0);
+		assertEquals(c[1].y, 0.0, 0);
 		
 		c = a.resolveCollision(b);
 		
-		assertTrue(c == null);
+		assertNull(c);
 	}
 
 	@Test

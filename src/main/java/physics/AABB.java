@@ -5,7 +5,7 @@ public class AABB {
 	public Vector halfSize;
 	public Vector velocity;
 	public Vector acceleration;
-	public double mass, imass;
+	public double mass;
 	
 	public AABB(Vector center, Vector halfSize, double mass) {
 		this(center, halfSize, null, null, mass);
@@ -17,10 +17,11 @@ public class AABB {
 		this.velocity = velocity != null ? velocity : Vector.zero();
 		this.acceleration = acceleration != null ? acceleration : Vector.zero();
 		this.mass = mass;
-		this.imass = mass > 0 ? 1 / mass : 0;
 	}
 	
 	public void applyForce(Vector f) {
+		if(mass <= 0)
+			return;
 		acceleration = acceleration.add(f.mult(1/mass));
 	}
 	
@@ -53,78 +54,99 @@ public class AABB {
 	}
 	
 	/**
-	 * Calculate the closest point from the given point that lines inside this AABB.
+	 * Calculate the closest point from the given point that lies inside this AABB.
 	 * @param point
 	 * @return the closest point
 	 */
 	public Vector closestPointOnBoundsToPoint(Vector point) {
-		double minDist = Math.abs(point.x - getMin().x);
-		Vector boundsPoint = new Vector(getMin().x, point.y);
+		Vector min = getMin();
+		Vector max = getMax();
 		
-		if (Math.abs(getMax().x - point.x) < minDist) {
-			minDist = Math.abs(getMax().x - point.x);
-			boundsPoint = new Vector(getMax().x, point.y);
+		double minDist = Math.abs(point.x - min.x);
+		Vector boundsPoint = new Vector(min.x, point.y);
+		
+		if (Math.abs(max.x - point.x) < minDist) {
+			minDist = Math.abs(max.x - point.x);
+			boundsPoint = new Vector(max.x, point.y);
 		}
 		
-		if (Math.abs(getMax().y - point.y) < minDist) {
-			minDist = Math.abs(getMax().y - point.y);
-			boundsPoint = new Vector(point.x, getMax().y);
+		if (Math.abs(max.y - point.y) < minDist) {
+			minDist = Math.abs(max.y - point.y);
+			boundsPoint = new Vector(point.x, max.y);
 		}
 		
-		if (Math.abs(getMin().y - point.y) < minDist) {
-			minDist = Math.abs(getMin().y - point.y);
-			boundsPoint = new Vector(point.x, getMin().y);
+		if (Math.abs(min.y - point.y) < minDist) {
+			minDist = Math.abs(min.y - point.y);
+			boundsPoint = new Vector(point.x, min.y);
 		}
 		
 		return boundsPoint;
 	}
 	
+	/**
+	 * Returns a bounding box of translations that would result in a collision
+	 * with the other AABB. If (0, 0) is inside this bounding box, there is
+	 * already a collision.
+	 * @param the other AABB
+	 * @return the minkowski difference
+	 */
 	public AABB minkowskiDifference(AABB o) {
 		Vector topLeft = getMin().sub(o.getMax());
 		Vector fullSize = getSize().add(o.getSize());
 		return new AABB(topLeft.add(fullSize.mult(0.5)), fullSize.mult(0.5), null, null, 0);
 	}
 	
+	/**
+	 * Resolves a collision with the other bounding box, if there is one.
+	 * This means moving the two bounding boxes so that they are no longer 
+	 * colliding and also changing their velocities so that they are no longer
+	 * moving towards each other.
+	 * The return value is a vector array of the displacement that was caused due
+	 * to the collision, or null if there was no collision. At index 0 is this 
+	 * bounding box's displacement and index 1 is the other box's displacement.
+	 * @param o the other AABB
+	 * @return array of two displacement vectors, or null.
+	 */
 	public Vector[] resolveCollision(AABB o) {
 		AABB md = o.minkowskiDifference(this);
-		if (md.getMin().x < 0 && md.getMax().x > 0 && md.getMin().y < 0 && md.getMax().y > 0) {
-			
-			/* calculate the overlapping vector */
-			Vector penetrationVector = md.closestPointOnBoundsToPoint(Vector.zero());
+		
+		/* no collision if true */
+		if (md.getMin().x >= 0 || md.getMax().x <= 0 || md.getMin().y >= 0 || md.getMax().y <= 0)
+			return null;
+		
+		/* calculate the overlapping vector */
+		Vector penetrationVector = md.closestPointOnBoundsToPoint(Vector.zero());
 
-			/* adjust the velocities accordingly */
-	        Vector tangent = penetrationVector.normalized().tangent();
-	        velocity = tangent.mult(velocity.dot(tangent));
-	        o.velocity = tangent.mult(o.velocity.dot(tangent));
+		/* adjust the velocities accordingly */
+        Vector tangent = penetrationVector.normalized().tangent();
+        
+        velocity = tangent.mult(velocity.dot(tangent));
+        o.velocity = tangent.mult(o.velocity.dot(tangent));
 
-			/* move the center based on masses */
-			if(mass != 0 || o.mass != 0) {
-				double m = mass + o.mass;
-				
-				double a = 0;
-				double b = 0;
-				
-				if(o.mass == 0) {
-					a = 1;
-				} else if(mass == 0) {
-					b = 1;
-				} else {
-					a = o.mass / m;
-					b = mass / m;
-				}
-				
-				Vector A = penetrationVector.mult(a);
-				Vector B = penetrationVector.mult(-b);
-				
-				center = center.add(A);
-				o.center = o.center.add(B);
-				
-		        return new Vector[] {A, B};
-			} else {
-				return new Vector[] {Vector.zero(), Vector.zero()};
-			}
+        if (mass == 0 && o.mass == 0)
+			return new Vector[] {Vector.zero(), Vector.zero()};
+        
+		/* move the center based on masses */
+		double m = mass + o.mass;
+		
+		double a = 0;
+		double b = 0;
+		
+		if(o.mass == 0) {
+			a = 1;
+		} else if(mass == 0) {
+			b = 1;
+		} else {
+			a = o.mass / m;
+			b = mass / m;
 		}
 		
-		return null;
+		Vector A = penetrationVector.mult(a);
+		Vector B = penetrationVector.mult(-b);
+		
+		center = center.add(A);
+		o.center = o.center.add(B);
+		
+        return new Vector[] {A, B};
 	}
 }
