@@ -53,6 +53,7 @@ public class Vector {
 		return x == 0 && y == 0;
 	}
 
+    @Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Vector)) {
 			return false;
@@ -61,6 +62,11 @@ public class Vector {
 		Vector v = (Vector) o;
 
 		return v.x == x && v.y == y;
+	}
+
+    @Override
+	public String toString() {
+	    return "Vector(" + x + ", " + y+")";
 	}
 }
 
