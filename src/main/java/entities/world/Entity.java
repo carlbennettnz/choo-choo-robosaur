@@ -1,13 +1,9 @@
 package entities.world;
 
-import common.AABB;
-import common.Collidable;
-import common.Positionable;
-import common.Renderable;
-import common.Vector;
+import common.*;
 
-public abstract class Entity implements Renderable, Collidable, Positionable {
-    private Positionable position;
+public abstract class Entity implements Renderable, Collidable, Positionable, Tickable {
+    protected Positionable position;
     protected Collidable collisionCallback;
 
     public Entity(Positionable position) {
@@ -55,4 +51,8 @@ public abstract class Entity implements Renderable, Collidable, Positionable {
     public void setCollisionCallback(Collidable c) {
         this.collisionCallback = c;
     }
+
+    public void tick(double delta) {
+
+	}
 }

@@ -1,22 +1,59 @@
 package ui;
 
-import game.UIController;
 import game.GameController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class UI extends JComponent {
-	private final UIController game;
-	private final GameController state;
+import canvas.Canvas;
 
-	public UI(UIController game, GameController state) {
-		this.game = game;
-		this.state = state;
+public class UI extends JFrame {
+	private GameController controller;
+	private JPanel cards;
+
+	public UI() {
+		super("Choo Choo Robosaur");
+
+		cards = new JPanel(new CardLayout());
+
+		setPreferredSize(new Dimension(1280, 720));
+		add(cards, BorderLayout.CENTER);
+
+		GameController gc = new GameController(1280, 720);
+		gc.bindKeyListeners(this);
+
+		cards.add(new MainMenuView(this), Route.MAIN_MENU.toString());
+		cards.add(new Canvas(gc), Route.GAME.toString());
+
+		goToRoute(Route.GAME);
+
+		pack();
+		setVisible(true);
+		setFocusable(true);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	void goToRoute(Route route) {
+		((CardLayout) cards.getLayout()).show(cards, route.toString());
+	}
+
+	public void start() {
+		goToRoute(Route.GAME);
+	}
+
+	public void pause() {
+		goToRoute(Route.PAUSE);
+	}
+
+	public void quit() {
+		dispose();
+	}
+
+	public enum Route {
+		MAIN_MENU,
+		GAME,
+		PAUSE
 	}
 }

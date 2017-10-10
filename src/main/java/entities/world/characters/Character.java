@@ -2,6 +2,7 @@ package entities.world.characters;
 
 import common.Collidable;
 import common.Positionable;
+import common.Vector;
 import entities.inventory.Inventory;
 import entities.properties.Collectable;
 import entities.properties.Damageable;
@@ -60,5 +61,9 @@ public abstract class Character extends Entity implements Damageable, Tickable, 
 
     public boolean collect(Collectable collectable){
         return inventory.add(collectable.getInventoryItem());
+    }
+
+    public void collide(Collidable entity, Vector vector) {
+
     }
 }
