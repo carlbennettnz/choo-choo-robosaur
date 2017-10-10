@@ -5,6 +5,7 @@ import entities.world.Entity;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,6 +82,12 @@ public class Canvas extends JPanel {
 	void drawGame(Graphics g) {
 		Vector topLeft = game.getViewport().getMin();
 		g.translate((int) Math.round(-topLeft.x), (int) Math.round(-topLeft.y));
+
+		Graphics2D g2 = (Graphics2D) g;
+
+		g2.setPaint(new GradientPaint(-10000, 0, new Color(0, 20, 50), 10000, 0, new Color(20, 60, 230)));
+		g2.fill(new Rectangle2D.Double(-10000, topLeft.y, 20000, getHeight()));
+
 		for (Renderable entity : getEntitiesInView()) {
 			Vector pos = entity.getBoundingBox().getMin();
 			int x = (int) Math.round(pos.x);

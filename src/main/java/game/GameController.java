@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.Set;
 
 public class GameController implements common.GameController {
-	private Renderable player;
 	private List<Entity> entities;
 	private AABB viewport;
 	private GameStatus status;
 	private int level;
 	private Set<KeyListener> keyListeners;
 	private World world;
+	private Player player;
 
 	public GameController(int width, int height) {
 		this.status = GameStatus.PLAY;
@@ -36,7 +36,7 @@ public class GameController implements common.GameController {
 
 		PhysObject po = new PhysObject(new AABB(new Vector(0, 0), new Vector(20, 50)), 1);
 		PlayerController pc = new PlayerController();
-		Player player = new Player(po, pc, 100);
+		player = new Player(po, pc, 100);
 
 		keyListeners.add(pc);
 		world.addObject(po);
@@ -77,5 +77,7 @@ public class GameController implements common.GameController {
 		}
 
 		world.advance(delta);
+
+		viewport.center = player.getPosition();
 	}
 }
