@@ -1,16 +1,23 @@
 package ui;
 
-import game.UIController;
-
 import javax.swing.*;
+import java.awt.*;
 
-class MainMenuView extends JComponent {
-	private final UIController game;
+class MainMenuView extends JPanel {
+	private final UI ui;
 
-	MainMenuView(UIController game) {
-		this.game = game;
+	MainMenuView(UI ui) {
+		this.ui = ui;
 
-		// draw menu options here, hooking their events to
-		// method calls on `game`
+		setLayout(new BorderLayout());
+
+		JButton startBtn = new JButton("Start");
+
+		startBtn.addActionListener(event -> {
+			System.out.println("click");
+			ui.start();
+		});
+
+		add(startBtn, BorderLayout.CENTER);
 	}
 }
