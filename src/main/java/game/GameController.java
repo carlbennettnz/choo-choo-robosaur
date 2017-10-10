@@ -46,7 +46,6 @@ public class GameController implements common.GameController {
 	@Override
 	public void bindKeyListeners(Component component) {
 		for (KeyListener kl : keyListeners) {
-			System.out.println("ok");
 			component.addKeyListener(kl);
 		}
 	}
@@ -77,6 +76,6 @@ public class GameController implements common.GameController {
 			entity.tick(delta);
 		}
 
-		world.advance	(delta);
+		world.advance(delta);
 	}
 }

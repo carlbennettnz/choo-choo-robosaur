@@ -22,7 +22,6 @@ public class Canvas extends JPanel {
 		setPreferredSize(new Dimension(1280, 720));
 
 		timer = new Timer((int) (PERIOD * 1000), e -> {
-			System.out.println(currentTimeMillis());
 			game.tick(PERIOD);
 			repaint();
 		});
