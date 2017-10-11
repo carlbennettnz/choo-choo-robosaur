@@ -1,5 +1,6 @@
 package entities.world.characters.controllers;
 
+import common.GameController;
 import common.Vector;
 import entities.world.characters.Character;
 import entities.world.characters.CharacterController;
@@ -14,8 +15,8 @@ public class PlayerController implements CharacterController, KeyListener {
 
     }
 
-    public void update(Character character, double deltaTime) {
-        int movement = 10 * dir;
+    public void update(Character character, double deltaTime, GameController game) {
+        int movement = 500 * dir;
 
         character.setVelocity(new Vector(movement, 0));
     }

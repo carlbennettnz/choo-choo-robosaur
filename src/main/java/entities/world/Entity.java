@@ -3,8 +3,9 @@ package entities.world;
 import common.*;
 
 public abstract class Entity implements Renderable, Collidable, Positionable, Tickable {
-    protected Positionable position;
+    public Positionable position;
     protected Collidable collisionCallback;
+    public boolean removeOnNextTick = false;
 
     public Entity(Positionable position) {
         setPositionable(position);
@@ -51,8 +52,4 @@ public abstract class Entity implements Renderable, Collidable, Positionable, Ti
     public void setCollisionCallback(Collidable c) {
         this.collisionCallback = c;
     }
-
-    public void tick(double delta) {
-
-	}
 }

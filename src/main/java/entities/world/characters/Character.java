@@ -1,21 +1,22 @@
 package entities.world.characters;
 
 import common.Collidable;
+import common.GameController;
 import common.Positionable;
 import common.Vector;
+import common.Tickable;
 import entities.inventory.Inventory;
 import entities.properties.Collectable;
-import entities.properties.Damageable;
+import entities.properties.Damagable;
 import entities.properties.ItemCollector;
-import entities.properties.Tickable;
 import entities.world.Entity;
 
-public abstract class Character extends Entity implements Damageable, Tickable, ItemCollector, Collidable {
-    private final Inventory inventory;
-    private final CharacterController controller;
+public abstract class Character extends Entity implements Damagable, Tickable, ItemCollector, Collidable {
+    protected final Inventory inventory;
+    protected final CharacterController controller;
 
-    private int health;
-    private int maxHealth;
+    protected int health;
+    protected int maxHealth;
 
     public Character(Positionable position, CharacterController controller, int maxHealth) {
         super(position);
@@ -29,8 +30,8 @@ public abstract class Character extends Entity implements Damageable, Tickable, 
         this.controller = controller;
     }
 
-    public final void tick(double deltaTime){
-        this.controller.update(this, deltaTime);
+    public void tick(double deltaTime, GameController game){
+        this.controller.update(this, deltaTime, game);
     }
 
     public int getHealth() {
@@ -48,6 +49,8 @@ public abstract class Character extends Entity implements Damageable, Tickable, 
     public void damage(int damage) {
         assert(damage >= 0);
         health = Math.max(0, health - damage);
+
+        if (health == 0) removeOnNextTick = true;
     }
 
     public void heal(int healing) {

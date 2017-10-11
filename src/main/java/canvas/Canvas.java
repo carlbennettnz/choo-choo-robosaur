@@ -15,15 +15,13 @@ public class Canvas extends JPanel {
 	private final GameController game;
 	private Timer timer;
 
-	private static final double PERIOD = 1/60;
-
 	public Canvas(GameController game) {
 		this.game = game;
 		setBackground(Color.black);
 		setPreferredSize(new Dimension(1280, 720));
 
-		timer = new Timer((int) (PERIOD * 1000), e -> {
-			game.tick(PERIOD);
+		timer = new Timer(16, e -> {
+			game.tick(16.0/1000, game);
 			repaint();
 		});
 
@@ -85,8 +83,8 @@ public class Canvas extends JPanel {
 
 		Graphics2D g2 = (Graphics2D) g;
 
-		g2.setPaint(new GradientPaint(-10000, 0, new Color(0, 20, 50), 10000, 0, new Color(20, 60, 230)));
-		g2.fill(new Rectangle2D.Double(-10000, topLeft.y, 20000, getHeight()));
+		g2.setPaint(new GradientPaint(-5000, 0, new Color(0, 20, 50), 5000, 0, new Color(20, 60, 230)));
+		g2.fill(new Rectangle2D.Double(-5000, topLeft.y, 10000, getHeight()));
 
 		for (Renderable entity : getEntitiesInView()) {
 			Vector pos = entity.getBoundingBox().getMin();

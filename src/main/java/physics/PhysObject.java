@@ -28,8 +28,8 @@ public class PhysObject implements Positionable {
      * @param dt change in time (seconds)
      */
     public void advance(double dt) {
-        velocity = velocity.add(acceleration);
-        aabb.center = aabb.center.add(velocity);
+        velocity = velocity.add(acceleration.mult(dt));
+        aabb.center = aabb.center.add(velocity.mult(dt));
         acceleration = Vector.zero();
     }
     
