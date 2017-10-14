@@ -1,15 +1,12 @@
 package entities.world.scenery;
 
-import common.Collidable;
-import common.GameController;
-import common.Positionable;
-import common.Vector;
+import common.AABB;
 
 import java.awt.*;
 
 public class Box extends Scenery {
-	public Box(Positionable position) {
-		super(position);
+	public Box(AABB boundingBox) {
+		super(boundingBox);
 	}
 
 	@Override

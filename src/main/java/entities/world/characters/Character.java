@@ -1,10 +1,6 @@
 package entities.world.characters;
 
-import common.Collidable;
-import common.GameController;
-import common.Positionable;
-import common.Vector;
-import common.Tickable;
+import common.*;
 import entities.inventory.Inventory;
 import entities.properties.Collectable;
 import entities.properties.Damagable;
@@ -18,8 +14,8 @@ public abstract class Character extends Entity implements Damagable, Tickable, I
     protected int health;
     protected int maxHealth;
 
-    public Character(Positionable position, CharacterController controller, int maxHealth) {
-        super(position);
+    public Character(Vector position, CharacterController controller, int maxHealth) {
+        super(new AABB(position, new Vector(15, 50)), 10);
 
         assert (maxHealth > 0);
 
@@ -68,5 +64,9 @@ public abstract class Character extends Entity implements Damagable, Tickable, I
 
     public void collide(Collidable entity, Vector vector) {
 
+    }
+
+    public CharacterController getController() {
+        return controller;
     }
 }
