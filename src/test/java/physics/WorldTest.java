@@ -129,7 +129,7 @@ class P implements Physical {
     private AABB b;
     private Vector v, a;
     private double m;
-    P(int x, int y, int w, int h) { this(x, y, w, h, 0); }
+    P(int x, int y, int w, int h) { this(x, y, w, h, 1); }
     P(int x, int y, int w, int h, double m) { b = new AABB(new Vector(x, y), new Vector(w, h)); this.m = m; }
     public AABB getBoundingBox() { return b; }
     public void draw(Graphics g) {}
@@ -139,6 +139,6 @@ class P implements Physical {
     public void setBoundingBox(AABB b) { this.b = b; }
     public void setVelocity(Vector v) { this.v = v; }
     public void setMass(double m) { this.m = m; }
-    public void setAcceleration(Vector acc) { this.a = a; }
+    public void setAcceleration(Vector acc) { this.a = acc; }
     public void collide(Physical o, Vector[] collision) {}
 }
