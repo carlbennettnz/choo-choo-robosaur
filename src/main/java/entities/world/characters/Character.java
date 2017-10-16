@@ -7,7 +7,7 @@ import entities.properties.Damagable;
 import entities.properties.ItemCollector;
 import entities.world.Entity;
 
-public abstract class Character extends Entity implements Damagable, Tickable, ItemCollector, Collidable {
+public abstract class Character extends Entity implements Damagable, Tickable, ItemCollector {
     protected final Inventory inventory;
     protected final CharacterController controller;
 
@@ -60,10 +60,6 @@ public abstract class Character extends Entity implements Damagable, Tickable, I
 
     public boolean collect(Collectable collectable){
         return inventory.add(collectable.getInventoryItem());
-    }
-
-    public void collide(Collidable entity, Vector vector) {
-
     }
 
     public CharacterController getController() {

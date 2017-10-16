@@ -4,8 +4,8 @@ import common.AABB;
 
 import java.awt.*;
 
-public class Box extends Scenery {
-	public Box(AABB boundingBox) {
+public class Crate extends Scenery {
+	public Crate(AABB boundingBox) {
 		super(boundingBox);
 	}
 
