@@ -9,13 +9,14 @@ import java.awt.*;
 public class Bullet extends Entity {
 	private int damage;
 
-	public Bullet(Positionable position, int damage) {
-		super(position);
+	public Bullet(Vector position, int damage, int direction) {
+		super(new AABB(position, new Vector(10, 3)), 0);
 		this.damage = damage;
+
+		setVelocity(new Vector(400 * direction, 0));
 	}
 
-	@Override
-	public void collide(Collidable entity, Vector vector) {
+	public void collide(Physical entity, Vector[] collision) {
 		if (entity instanceof Damagable) {
 			Damagable d = (Damagable) entity;
 			d.damage(damage);

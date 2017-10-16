@@ -60,7 +60,7 @@ public class CanvasTest {
 		canvas.drawTitle(g, "Title");
 
 		verify(g).setColor(Color.white);
-		verify(g).drawChars("Title".toCharArray(), 0, 5, 20, 50);
+		verify(g).drawString("Title", 9, 73);
 	}
 
 	@Test

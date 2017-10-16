@@ -2,16 +2,15 @@ package entities.world.characters;
 
 import common.AABB;
 import common.GameController;
-import common.Positionable;
+import common.Physical;
 import common.Vector;
 import entities.properties.Shooter;
 import entities.world.damaging.Bullet;
-import physics.PhysObject;
 
 import java.awt.*;
 
 public class Robot extends Character implements Shooter {
-	public Robot(Positionable position, CharacterController controller, int maxHealth) {
+	public Robot(Vector position, CharacterController controller, int maxHealth) {
 		super(position, controller, maxHealth);
 	}
 
@@ -25,10 +24,17 @@ public class Robot extends Character implements Shooter {
 	@Override
 	public void shoot(int direction, GameController game) {
 		direction = direction < 0 ? -1 : 1;
-		AABB box = getBoundingBox();
-		PhysObject bpo = new PhysObject(new AABB(box.center.add(new Vector(box.halfSize.x * direction + 10, 0)), new Vector(10, 4)), 0);
-		bpo.setVelocity(new Vector(400 * direction, 0));
-		Bullet b = new Bullet(bpo, 10);
-		game.addEntity(b, bpo);
+		double halfWidth = getBoundingBox().halfSize.x;
+		Vector robotPos = getPosition();
+
+		Vector bulletPos = robotPos.add(new Vector(halfWidth * direction + 10, 0));
+
+		Bullet b = new Bullet(bulletPos, 10, direction);
+		game.addEntity(b);
+	}
+
+	@Override
+	public void collide(Physical o, Vector[] collision) {
+
 	}
 }

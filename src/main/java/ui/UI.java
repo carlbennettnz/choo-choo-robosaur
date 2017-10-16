@@ -21,8 +21,7 @@ public class UI extends JFrame {
 		setPreferredSize(new Dimension(1280, 720));
 		add(cards, BorderLayout.CENTER);
 
-		GameController gc = new GameController(1280, 720);
-		gc.bindKeyListeners(this);
+		GameController gc = new GameController(this);
 
 		cards.add(new MainMenuView(this), Route.MAIN_MENU.toString());
 		cards.add(new Canvas(gc), Route.GAME.toString());
