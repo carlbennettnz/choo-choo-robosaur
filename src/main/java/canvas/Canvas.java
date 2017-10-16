@@ -1,15 +1,12 @@
 package canvas;
 
 import common.*;
-import entities.world.Entity;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.lang.System.currentTimeMillis;
 
 public class Canvas extends JPanel {
 	private final GameController game;
@@ -97,7 +94,7 @@ public class Canvas extends JPanel {
 	}
 
 	List<Renderable> getEntitiesInView() {
-		List<Entity> entities = game.getEntities();
+		List<? extends Renderable> entities = game.getEntities();
 		AABB viewport = game.getViewport();
 
 		return entities

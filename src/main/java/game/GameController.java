@@ -2,13 +2,12 @@ package game;
 
 import common.*;
 import entities.world.Entity;
-import entities.world.characters.Player;
+import entities.world.characters.*;
+import entities.world.characters.Character;
 import entities.world.characters.Robot;
 import entities.world.characters.controllers.PlayerController;
 import entities.world.characters.controllers.ShooterController;
 import entities.world.scenery.Box;
-import entities.world.scenery.Scenery;
-import physics.PhysObject;
 import physics.World;
 
 import java.awt.*;
@@ -28,56 +27,32 @@ public class GameController implements common.GameController {
 	private World world;
 	private Player player;
 	private Set<Entity> entitiesToAdd;
-	private Set<PhysObject> physObjectsToAdd;
+	private Component component;
 
-	public GameController(int width, int height) {
+	public GameController(Component component) {
 		this.status = GameStatus.PLAY;
-		viewport = new AABB(new Vector(0, 0), new Vector(width / 2, height / 2));
+		Dimension size = component.getPreferredSize();
+		viewport = new AABB(new Vector(0, 0), new Vector(size.getWidth() / 2, size.getHeight() / 2));
 		entitiesToAdd = new HashSet<>();
-		physObjectsToAdd = new HashSet<>();
+		level = 1;
 
-		keyListeners = new HashSet<>();
+		this.component = component;
 		world = new World();
 		entities = new ArrayList<>();
+		player = new Player(new Vector(0, 0), new PlayerController(), 100);
 
-		PhysObject po = new PhysObject(new AABB(new Vector(0, 0), new Vector(20, 50)), 1);
-		PlayerController pc = new PlayerController();
-		player = new Player(po, pc, 100);
-
-		keyListeners.add(pc);
-		addEntity(player, po);
-
-		PhysObject boxPO1 = new PhysObject(new AABB(new Vector(100, 0), new Vector(50, 50)), 1);
-		PhysObject boxPO2 = new PhysObject(new AABB(new Vector(500, 0), new Vector(50, 50)), 100);
-		Box box1 = new Box(boxPO1);
-		Box box2 = new Box(boxPO2);
-		addEntity(box1, boxPO1);
-		addEntity(box2, boxPO2);
-
-		PhysObject robotPO = new PhysObject(new AABB(new Vector(-300, 0), new Vector(50, 50)), 1);
-		ShooterController robotC = new ShooterController();
-		Robot robot = new Robot(robotPO, robotC, 100);
-		addEntity(robot, robotPO);
-	}
-
-	@Override
-	public void bindKeyListeners(Component component) {
-		for (KeyListener kl : keyListeners) {
-			component.addKeyListener(kl);
-		}
-	}
-
-	public Renderable getPlayer() {
-		return player;
+		addEntity(player);
+		addEntity(new Robot(new Vector(-300, 0), new ShooterController(), 100));
+		addEntity(new Box(new AABB(new Vector(100, 0), new Vector(50, 50))));
+		addEntity(new Box(new AABB(new Vector(500, 0), new Vector(50, 50))));
 	}
 
 	public List<Entity> getEntities() {
 		return entities;
 	}
 
-	public void addEntity(Entity entity, PhysObject physObject) {
+	public void addEntity(Entity entity) {
 		entitiesToAdd.add(entity);
-		physObjectsToAdd.add(physObject);
 	}
 
 	public AABB getViewport() {
@@ -92,25 +67,34 @@ public class GameController implements common.GameController {
 		return level;
 	}
 
-	@Override
 	public void tick(double delta, common.GameController game) {
-		List<Entity> entitiesForRemoval = entities.stream().filter(e -> e.removeOnNextTick).collect(Collectors.toList());
+		List<Entity> entitiesForRemoval = entities.stream()
+			.filter(e -> e.removeOnNextTick)
+			.collect(Collectors.toList());
 
 		for (Entity e : entitiesForRemoval) {
-			world.removeObject((PhysObject) e.position);
+			world.removeObject(e);
 			entities.remove(e);
 
 			// todo: catch player death
+
+			// lol
+			if (e instanceof Character && ((Character) e).getController() instanceof KeyListener) {
+				component.removeKeyListener((KeyListener) ((Character) e).getController());
+			}
 		}
 
-		entities.addAll(entitiesToAdd);
+		for (Entity e : entitiesToAdd) {
+			entities.add(e);
+			world.addObject(e);
+
+			// lol
+			if (e instanceof Character && ((Character) e).getController() instanceof KeyListener) {
+				component.addKeyListener((KeyListener) ((Character) e).getController());
+			}
+		}
+
 		entitiesToAdd.clear();
-
-		for (PhysObject po : physObjectsToAdd) {
-			world.addObject(po);
-		}
-
-		physObjectsToAdd.clear();
 
 		for (Tickable entity : getEntities()) {
 			entity.tick(delta, this);

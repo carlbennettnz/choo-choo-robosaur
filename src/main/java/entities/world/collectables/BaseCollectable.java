@@ -1,7 +1,7 @@
 package entities.world.collectables;
 
+import common.AABB;
 import common.Collidable;
-import common.Positionable;
 import common.Vector;
 import entities.inventory.InventoryItem;
 import entities.properties.Collectable;
@@ -12,8 +12,8 @@ import entities.world.Entity;
 public abstract class BaseCollectable extends Entity implements Collectable {
     private InventoryItem inventoryItem;
 
-    public BaseCollectable(Positionable position, InventoryItem inventoryItem) {
-        super(position);
+    public BaseCollectable(AABB box, InventoryItem inventoryItem) {
+        super(box, 0);
 
         assert (inventoryItem != null);
 

@@ -2,54 +2,57 @@ package entities.world;
 
 import common.*;
 
-public abstract class Entity implements Renderable, Collidable, Positionable, Tickable {
-    public Positionable position;
-    protected Collidable collisionCallback;
+public abstract class Entity implements Renderable, Physical, Tickable {
     public boolean removeOnNextTick = false;
+    private AABB boundingBox;
+    private Vector velocity;
+    private Vector acceleration;
+    private double mass;
 
-    public Entity(Positionable position) {
-        setPositionable(position);
-    }
-
-    private final void setPositionable(Positionable position) {
-        if(position == null)
-            throw new RuntimeException("entity must have a positionable.");
-        this.position = position;
-        position.setCollisionCallback(this);
+    public Entity(AABB boundingBox, double mass) {
+        this.boundingBox = boundingBox;
+        this.mass = mass;
+        velocity = Vector.zero();
+        acceleration = Vector.zero();
     }
     
     @Override
     public AABB getBoundingBox() {
-        return position.getBoundingBox();
-    }
-
-    @Override
-    public Vector getPosition() {
-        return position.getPosition();
+        return boundingBox;
     }
 
     @Override
     public Vector getVelocity() {
-        return position.getVelocity();
+        return velocity;
     }
 
     @Override
-    public void setPosition(Vector p) {
-        position.setPosition(p);
+    public Vector getAcceleration() {
+        return acceleration;
     }
 
     @Override
-    public void setVelocity(Vector p) {
-        position.setVelocity(p);
+    public void setBoundingBox(AABB box) {
+        boundingBox = box;
     }
 
     @Override
-    public void applyForce(Vector f) {
-        position.applyForce(f);
+    public void setVelocity(Vector velocity) {
+        this.velocity = velocity;
     }
 
     @Override
-    public void setCollisionCallback(Collidable c) {
-        this.collisionCallback = c;
+    public double getMass() {
+        return mass;
+    }
+
+    @Override
+    public void setMass(double mass) {
+        this.mass = mass;
+    }
+
+    @Override
+    public void setAcceleration(Vector acc) {
+        acceleration = acc;
     }
 }
