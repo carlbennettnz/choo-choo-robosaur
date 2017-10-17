@@ -6,6 +6,7 @@ import entities.world.characters.CharacterController;
 import entities.world.characters.Player;
 import entities.world.characters.Robot;
 import entities.world.characters.controllers.PlayerController;
+import entities.world.characters.controllers.ShooterController;
 import entities.world.collectables.Key;
 import entities.world.scenery.Crate;
 
@@ -76,7 +77,7 @@ public class EntityParser {
 			s.nextDouble()
 		);
 
-		CharacterController controller = new PlayerController();
+		CharacterController controller = new ShooterController();
 
 		return new Robot(pos, controller, 100);
 	}
