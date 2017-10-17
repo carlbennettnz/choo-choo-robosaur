@@ -1,10 +1,11 @@
+package entities;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class Textures {
-
     public static final BufferedImage BACKDROP = loadImage("backdrop");
     public static final BufferedImage CRATE = loadImage("crate1");
     public static final BufferedImage DOOR = loadImage("door");
