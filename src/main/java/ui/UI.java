@@ -1,6 +1,6 @@
 package ui;
 
-import game.GameController;
+import common.GameController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,25 +8,28 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import canvas.Canvas;
+import game.Game;
 
 public class UI extends JFrame {
+	private Game game;
 	private GameController controller;
 	private JPanel cards;
+	private Canvas canvas;
 
-	public UI() {
+	public UI(Game game) {
 		super("Choo Choo Robosaur");
+
+		this.game = game;
 
 		cards = new JPanel(new CardLayout());
 
 		setPreferredSize(new Dimension(1280, 720));
 		add(cards, BorderLayout.CENTER);
 
-		GameController gc = new GameController(this);
-
 		cards.add(new MainMenuView(this), Route.MAIN_MENU.toString());
-		cards.add(new Canvas(gc), Route.GAME.toString());
 
-		goToRoute(Route.GAME);
+		canvas = new Canvas();
+		cards.add(canvas, Route.GAME.toString());
 
 		pack();
 		setVisible(true);
@@ -34,11 +37,12 @@ public class UI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	void goToRoute(Route route) {
+	private void goToRoute(Route route) {
 		((CardLayout) cards.getLayout()).show(cards, route.toString());
 	}
 
 	public void start() {
+		canvas.setController(game.loadLevel(this, 1));
 		goToRoute(Route.GAME);
 	}
 
