@@ -9,19 +9,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Canvas extends JPanel {
-	private final GameController game;
+	private GameController game = null;
 	private Timer timer;
 
-	public Canvas(GameController game) {
-		this.game = game;
+	public Canvas() {
 		setBackground(Color.black);
 		setPreferredSize(new Dimension(1280, 720));
 
 		timer = new Timer(16, e -> {
-			game.tick(16.0/1000, game);
-			repaint();
+			if (game != null) {
+				game.tick(16.0 / 1000, game);
+				repaint();
+			}
 		});
+	}
 
+	public void setController(GameController game) {
+		this.game = game;
 		timer.start();
 	}
 

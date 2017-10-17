@@ -2,7 +2,6 @@ package entities.properties;
 
 import common.Physical;
 import common.Vector;
-import entities.inventory.InventoryItem;
 
 /**
  * An entity that can be collected by ItemCollectors and provides an InventoyItem to be added to an Inventory.

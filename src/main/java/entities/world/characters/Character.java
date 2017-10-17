@@ -58,8 +58,8 @@ public abstract class Character extends Entity implements Damagable, Tickable, I
         return inventory;
     }
 
-    public boolean collect(Collectable collectable){
-        return inventory.add(collectable.getInventoryItem());
+    public boolean collect(Collectable collectable) {
+        return inventory.add(collectable);
     }
 
     public CharacterController getController() {
