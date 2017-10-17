@@ -1,0 +1,2 @@
+Player 0 0
+Robot 300 0
