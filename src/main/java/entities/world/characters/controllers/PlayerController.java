@@ -18,7 +18,7 @@ public class PlayerController implements CharacterController, KeyListener {
     public void update(Character character, double deltaTime, GameController game) {
         int movement = 500 * dir;
 
-        character.setVelocity(new Vector(movement, 0));
+        character.setVelocity(new Vector(movement, character.getVelocity().y));
     }
 
     public void keyTyped(KeyEvent e) {
