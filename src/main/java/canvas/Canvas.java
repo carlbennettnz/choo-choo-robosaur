@@ -81,7 +81,7 @@ public class Canvas extends JPanel {
 	}
 
 	void drawGame(Graphics g) {
-        Vector topLeft = game.getViewport().getMin();
+		Vector topLeft = game.getViewport().getMin();
 		g.translate((int) Math.round(-topLeft.x), (int) Math.round(-topLeft.y));
 
 		Graphics2D g2 = (Graphics2D) g;
