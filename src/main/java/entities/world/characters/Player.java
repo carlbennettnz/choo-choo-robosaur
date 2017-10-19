@@ -21,7 +21,8 @@ public class Player extends Character {
 	}
 
 	@Override
-	public void collide(Physical o, Vector[] collision) {
+	public void collide(Physical o, Vector collision) {
+	    super.collide(o, collision);
 		// collisions between the player and an object are handled by the object
 	}
 }

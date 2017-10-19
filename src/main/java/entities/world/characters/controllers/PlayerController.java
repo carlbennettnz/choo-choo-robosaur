@@ -10,15 +10,21 @@ import java.awt.event.KeyListener;
 
 public class PlayerController implements CharacterController, KeyListener {
     private int dir = 0;
+    private boolean jump = false;
 
     public PlayerController() {
 
     }
 
     public void update(Character character, double deltaTime, GameController game) {
-        int movement = 500 * dir;
-
-        character.setVelocity(new Vector(movement, 0));
+        double x = 500 * dir;
+        double y = character.getVelocity().y;
+        
+        if(jump && character.onGround) {
+            y -= 500;
+        }
+        
+        character.setVelocity(new Vector(x, y));
     }
 
     public void keyTyped(KeyEvent e) {
@@ -27,12 +33,15 @@ public class PlayerController implements CharacterController, KeyListener {
 
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case 65: // left
+            case 'A': // left
                 dir = -1;
                 break;
 
-            case 68: // right
+            case 'D': // right
                 dir = 1;
+                break;
+            case ' ': // jump
+                jump = true;
                 break;
         }
     }
@@ -45,6 +54,9 @@ public class PlayerController implements CharacterController, KeyListener {
 
             case 68:
                 if (dir == 1) dir = 0;
+                break;
+            case ' ': // jump
+                jump = false;
                 break;
         }
     }

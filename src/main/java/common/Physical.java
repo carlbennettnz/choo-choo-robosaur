@@ -11,7 +11,7 @@ public interface Physical extends Renderable {
     void setMass(double mass);
     void setAcceleration(Vector acc);
 
-    void collide(Physical o, Vector[] collision);
+    void collide(Physical o, Vector collision);
 
     default Vector setPosition(Vector pos) {
         return getBoundingBox().center = pos;

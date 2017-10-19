@@ -1,10 +1,12 @@
 package canvas;
 
 import common.*;
+import entities.Textures;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,9 +85,7 @@ public class Canvas extends JPanel {
 		g.translate((int) Math.round(-topLeft.x), (int) Math.round(-topLeft.y));
 
 		Graphics2D g2 = (Graphics2D) g;
-
-		g2.setPaint(new GradientPaint(-5000, 0, new Color(0, 20, 50), 5000, 0, new Color(20, 60, 230)));
-		g2.fill(new Rectangle2D.Double(-5000, topLeft.y, 10000, getHeight()));
+		drawBackground(g2);
 
 		for (Renderable entity : getEntitiesInView()) {
 			Vector pos = entity.getBoundingBox().getMin();
@@ -95,6 +95,30 @@ public class Canvas extends JPanel {
 			entity.draw(g);
 			g.translate(-x, -y);
 		}
+	}
+	
+	private void drawBackground(Graphics2D g2) {
+        Vector min = game.getViewport().getMin();
+        Vector size = game.getViewport().getSize();
+        BufferedImage img = Textures.BACKDROP;
+        
+        g2.translate(min.x, min.y);
+        
+        int width = img.getWidth();
+        int height = img.getHeight();
+        for(double x = -min.x%size.x-size.x; x < size.x; x+=width) {
+            boolean yy = false;
+            for(double y = -min.y%size.y-size.y; y < size.y; y+=height) {
+                if(yy) {
+                    g2.drawImage(img, (int) x, (int) y+height, width, -height, null);
+                } else {
+                    g2.drawImage(img, (int) x, (int) y, width, height, null);
+                }
+                yy = !yy;
+            }
+        }
+        
+        g2.translate(-min.x, -min.y);
 	}
 
 	List<Renderable> getEntitiesInView() {

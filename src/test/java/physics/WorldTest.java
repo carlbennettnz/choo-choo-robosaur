@@ -140,5 +140,5 @@ class P implements Physical {
     public void setVelocity(Vector v) { this.v = v; }
     public void setMass(double m) { this.m = m; }
     public void setAcceleration(Vector acc) { this.a = acc; }
-    public void collide(Physical o, Vector[] collision) {}
+    public void collide(Physical o, Vector collision) {}
 }
