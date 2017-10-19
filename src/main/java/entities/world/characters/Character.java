@@ -13,6 +13,7 @@ public abstract class Character extends Entity implements Damagable, Tickable, I
 
     protected int health;
     protected int maxHealth;
+    public boolean onGround = false;
 
     public Character(Vector position, CharacterController controller, int maxHealth) {
         super(new AABB(position, new Vector(15, 50)), 10);
@@ -28,6 +29,13 @@ public abstract class Character extends Entity implements Damagable, Tickable, I
 
     public void tick(double deltaTime, GameController game){
         this.controller.update(this, deltaTime, game);
+        onGround = false;
+    }
+    
+    public void collide(Physical o, Vector v) {
+        if(v.y < 0) {
+            onGround = true;
+        }
     }
 
     public int getHealth() {

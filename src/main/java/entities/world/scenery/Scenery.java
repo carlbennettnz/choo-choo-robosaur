@@ -14,7 +14,7 @@ public abstract class Scenery extends Entity {
     }
 
     @Override
-    public void collide(Physical o, Vector[] collision) {
+    public void collide(Physical o, Vector collision) {
 
     }
 }

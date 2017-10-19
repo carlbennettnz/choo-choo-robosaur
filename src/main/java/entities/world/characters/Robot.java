@@ -34,7 +34,7 @@ public class Robot extends Character implements Shooter {
 	}
 
 	@Override
-	public void collide(Physical o, Vector[] collision) {
+	public void collide(Physical o, Vector collision) {
 
 	}
 }

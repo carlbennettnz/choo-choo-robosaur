@@ -16,7 +16,7 @@ public class Bullet extends Entity {
 		setVelocity(new Vector(400 * direction, 0));
 	}
 
-	public void collide(Physical entity, Vector[] collision) {
+	public void collide(Physical entity, Vector collision) {
 		if (entity instanceof Damagable) {
 			Damagable d = (Damagable) entity;
 			d.damage(damage);

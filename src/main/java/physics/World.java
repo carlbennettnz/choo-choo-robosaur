@@ -56,8 +56,8 @@ public class World {
 				Physical b = objects.get(j);
 				Vector[] collision = resolveCollision(a, b);
 				if (collision != null) {
-					a.collide(b, collision);
-					b.collide(a, collision);
+					a.collide(b, collision[0]);
+					b.collide(a, collision[1]);
 				}
 			}
 		}
