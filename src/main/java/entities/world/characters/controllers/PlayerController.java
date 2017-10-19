@@ -17,11 +17,11 @@ public class PlayerController implements CharacterController, KeyListener {
     }
 
     public void update(Character character, double deltaTime, GameController game) {
-        double x = 500 * dir;
+        double x = 800 * dir;
         double y = character.getVelocity().y;
         
         if(jump && character.onGround) {
-            y -= 500;
+            y -= 2000;
         }
         
         character.setVelocity(new Vector(x, y));

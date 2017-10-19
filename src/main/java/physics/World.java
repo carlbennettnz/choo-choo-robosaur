@@ -41,7 +41,7 @@ public class World {
 		
 		/* gravity on all objects */
         for (Physical o : objects) {
-            o.applyForce(new Vector(0, 1000*o.getMass()));
+            o.applyForce(new Vector(0, 8000 * o.getMass()));
         }
         
 		/* advance all objects */
