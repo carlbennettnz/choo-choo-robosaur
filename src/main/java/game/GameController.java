@@ -4,10 +4,6 @@ import common.*;
 import entities.world.Entity;
 import entities.world.characters.*;
 import entities.world.characters.Character;
-import entities.world.characters.Robot;
-import entities.world.characters.controllers.PlayerController;
-import entities.world.characters.controllers.ShooterController;
-import entities.world.scenery.Crate;
 import physics.World;
 
 import java.awt.*;
@@ -23,7 +19,6 @@ class GameController implements common.GameController {
 	private AABB viewport;
 	private GameStatus status;
 	private int level;
-	private Set<KeyListener> keyListeners;
 	private World world;
 	private Player player;
 	private Set<Entity> entitiesToAdd;
